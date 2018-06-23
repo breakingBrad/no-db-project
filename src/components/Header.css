@@ -1,0 +1,15 @@
+header {
+    width:100%;
+    color: #ffffff;
+    background-color: #ff5f67;
+    position: fixed;
+    z-index: 10;
+    height: 60px;
+    top: 0;
+    left:0;
+}
+
+header h1 { 
+    margin: 0px;
+    padding: 10px 5px;    
+}

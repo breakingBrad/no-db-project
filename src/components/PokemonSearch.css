@@ -1,0 +1,24 @@
+.search-area {
+    padding-top: 15px;
+}
+
+.input-line {
+    border-radius: 2px;
+    border: .5;
+    padding: 3px 2px;
+    font-size: 12px;
+    display: inline-block;
+    margin: 4px 5px;
+    width: 150px
+}
+
+.input-line:focus {
+    outline: none;
+}
+
+span {
+    padding: 10px 6px;
+    font-size: 12px;
+    font-style: italic;
+
+}

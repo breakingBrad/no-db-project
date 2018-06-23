@@ -1,0 +1,31 @@
+.app {
+  padding-top: 60px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 25% 12.5% auto 12.5%;
+  grid-template-areas:
+    "header header"
+    "search search"
+    "left" "right"
+    "footer" "footer";
+}
+
+.pokemon-list {
+  list-style: none;
+}
+
+.pokemon-list strong {
+  font-size: 14px;
+
+}
+
+.pokemon-party {
+  list-style: none;
+}
+
+h3 {
+  font-size: 25px;
+
+}
+
+
