@@ -4,6 +4,7 @@ import _ from 'lodash';
 import './PokemonSearch.css';
 import Button from './Button';
 
+
 function parseArr(arr, val) {
   for (var i = arr.length - 1; i >= 0; i--) {
     if (arr[i].stat.name === val) {
@@ -21,14 +22,13 @@ class PokemonSearch extends Component {
       userInput: '',
       resultData: {},
       loading: true,
+      pokemon: {},
     }
   }
 
   handleChange(value) {
     this.setState({ userInput: value, });
   }
-
-
 
   fetchPokemonData = (e, identifier) => {
     e.preventDefault();
@@ -85,6 +85,7 @@ class PokemonSearch extends Component {
           Random
         </Button>
       </div>
+
     );
   }
 

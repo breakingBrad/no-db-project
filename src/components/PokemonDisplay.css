@@ -1,0 +1,36 @@
+.flex-container {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-content: flex-start;
+  align-items: stretch;
+  }
+
+.pokemon-results {
+  order: 0;
+  flex: 0 1 auto;
+  align-self: auto;
+  }
+
+.pokemon-party {
+  order: 0;
+  flex: 0 1 auto;
+  align-self: auto;
+  list-style: none;
+  }
+
+.pokemon-list {
+  list-style: none;
+}
+
+.pokemon-list strong {
+  font-size: 14px;
+
+}
+
+h3 {
+  font-size: 25px;
+
+}
+

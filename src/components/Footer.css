@@ -1,0 +1,15 @@
+footer {
+    width:100%;
+    color: #ffffff;
+    background-color: #ff5f67;
+    position: fixed;
+    z-index: 10;
+    height: 50px;
+    bottom: 0;
+    left:0;
+}
+
+footer h4 { 
+    margin: 0px;
+    padding: 18px 10px;
+}

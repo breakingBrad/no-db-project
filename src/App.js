@@ -3,12 +3,13 @@ import axios from 'axios';
 import _ from 'lodash';
 import './components/pokeball-header.png';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import PokemonSearch from './components/PokemonSearch'
-import Button from './components/Button';
 import Alert from './components/Alert';
-
+import PokemonDisplay from './components/PokemonDisplay';
 import './App.css';
 var randomPokemon = _.random(1, 151, false);
+
 function parseArr(arr, val) {
   for (var i = arr.length - 1; i >= 0; i--) {
     if (arr[i].stat.name === val) {
@@ -48,6 +49,7 @@ class App extends Component {
       },
     }
   }
+
   updatefromPokemonSearch = (searchResults) => {
     this.setState({
       resultData: searchResults.resultData,
@@ -57,8 +59,12 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.fetchData()
+  }
+
+  fetchData = (e, identifier) => {
     console.log(`Fetching Random Pokemon on Page Load, Id: ${randomPokemon}`);
-    axios.get(`http://localhost:3004/pokemon/${randomPokemon}`)
+    axios.get(`/pokemon/${randomPokemon}`)
       .then(response => {
         this.setState({
           loading: false,
@@ -86,7 +92,7 @@ class App extends Component {
         console.log(pokemon);
       })
     console.log('Fetching Pokemon Party on Page Load');
-    return axios.get('http://localhost:3004/pokemon-party/')
+    return axios.get('/pokemon-party/')
       .then(response => {
         this.setState({
           pokemonParty: [
@@ -107,7 +113,7 @@ class App extends Component {
       return this.setState({ alert: true });
     } else
       console.log(`Adding Pokemon to Party: ${pokemon.name} at Party Slot: ${index + 1} (Index: ${index})`);
-    return axios.post('http://localhost:3004/pokemon-party', pokemon, index)
+    return axios.post('/pokemon-party', pokemon, index)
       .then(response => {
 
         this.setState({
@@ -125,11 +131,12 @@ class App extends Component {
   removeFromParty = (e, index) => {
     e.preventDefault();
     console.log(`Removing Pokemon From Party at Party Slot: ${index + 1} (Index: ${index})`)
-    axios.delete('http://localhost:3004/pokemon-party/' + index)
+    axios.delete('/pokemon-party/' + index)
       .then(response => {
         this.setState({
           pokemonParty: this.state.pokemonParty.filter((pokemon, i) => i !== index),
           pokemonPartyIndex: response.data.length,
+          alert: false,
         });
       });
   }
@@ -143,67 +150,23 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <Header>
+        <Header className="header">
           Pokémon Search
         </Header>
-        <PokemonSearch updatefromPokemonSearch={this.updatefromPokemonSearch} />
-        <br />
-        <div className="pokemon-display-card">
-          <h3>Pokémon:</h3>
-          { !this.state.loading ? (
-            <ul className="pokemon-list">
-              <li className="pokemon-info-header">{this.state.pokemon.id} — {this.state.pokemon.name}</li>
-              <img className="result-pokemon-image" src={this.state.pokemon.sprite} alt="" />
-              <li><strong>Type:</strong> {!this.state.pokemon.typeTwo ? this.state.pokemon.typeOne : `${this.state.pokemon.typeOne} &  ${this.state.pokemon.typeTwo}`}</li>
-              <br />
-              <li><strong>HP:</strong> {this.state.pokemon.hp.base_stat}</li>
-              <li><strong>Attack:</strong> {this.state.pokemon.attack.base_stat}</li>
-              <li><strong>Defense:</strong> {this.state.pokemon.defense.base_stat}</li>
-              <li><strong>Special-Attack:</strong> {this.state.pokemon.specialAttack.base_stat}</li>
-              <li><strong>Special-Defense:</strong> {this.state.pokemon.specialDefense.base_stat}</li>
-              <li><strong>Speed:</strong> {this.state.pokemon.speed.base_stat}</li>
-              <br />
-              <li><strong>Height:</strong> {this.state.pokemon.height} m</li>
-              <li><strong>Weight:</strong> {this.state.pokemon.weight} kg</li>
-              <li><strong>Base Exp:</strong> {this.state.pokemon.baseExperience}</li>
-              <li>
-                <Button
-                  type="submit"
-                  onClick={e => this.addToParty(e, this.state.pokemon, this.state.pokemonPartyIndex)} >
-                  Add To Party
-                  </Button>
-              </li>
-            </ul>
-          ) : 'Loading . . .'}
-          {/* <table>
-          <tr><th></th><td colspan="2">{this.state.pokemon.id} — {this.state.pokemon.name}</td></tr>
-          <tr><td colspan="2"><img className="result-pokemon-image" src={this.state.pokemon.sprite} alt="" /></td></tr>
-          <tr><th>Type</th><td>{!this.state.pokemon.typeTwo ? this.state.pokemon.typeOne : `${this.state.pokemon.typeOne} &  ${this.state.pokemon.typeTwo}`}</td></tr>
-          <tr><th>Height</th><td>{this.state.pokemon.height}</td></tr>
-          <tr><th>Weight</th><td>{this.state.pokemon.weight}</td></tr>
-          <tr><th>Base Exp:</th><td>{this.state.pokemon.baseExperience}</td></tr>
-          </table> */}
+        <div className="wrapper">
+          <PokemonSearch
+            className="search"
+            fetchPokemon={this.fetchPokemon} updatefromPokemonSearch={this.updatefromPokemonSearch} />
+          <PokemonDisplay
+            className="display"
+            addToPartyFn={this.addToParty} removeFromPartyFn={this.removeFromParty}
+            pokemon={this.state.pokemon} pokemonPartyIndex={this.state.pokmeonPartyIndex} pokemonParty={this.state.pokemonParty} loading={this.state.loading}
+          />
+          <br /> {this.state.alert ? <Alert closeAlertModal={this.closeAlertModal} /> : null}
+          <br />
+          <Footer className="footer">© Brad Van Orman 2018</Footer>
         </div>
-        <div className="pokemon-party">
-          <h3>
-            Pokémon Party:
-          </h3>
-          <ul>
-            {this.state.pokemonParty.map((pokemonParty, i) => (
-              <li
-                key={`pokemonParty-${i}`}>
-                {pokemonParty.name} | Party Slot: {i + 1}
-                <Button
-                  type="submit"
-                  onClick={e => this.removeFromParty(e, i)} >
-                  Remove
-            </Button>
-              </li>
-            ))}
-          </ul>
-        </div>
-        {this.state.alert ? <Alert closeAlertModal={this.closeAlertModal} /> : null}
-      </div>
+      </div >
     );
   }
 }

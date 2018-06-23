@@ -1,31 +1,32 @@
 .app {
   padding-top: 60px;
-  display: grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 25% 12.5% auto 12.5%;
-  grid-template-areas:
-    "header header"
-    "search search"
-    "left" "right"
-    "footer" "footer";
 }
 
-.pokemon-list {
-  list-style: none;
-}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-content: flex-start;
+  align-items: flex-start;
+  }
 
-.pokemon-list strong {
-  font-size: 14px;
+.search {
+  order: 0;
+  flex: 0 1 12.5%;
+  align-self: stretch;
+  }
 
-}
+.display {
+  order: 1;
+  flex: 2 1 62.5%;
+  align-self: stretch;
+  }
 
-.pokemon-party {
-  list-style: none;
-}
-
-h3 {
-  font-size: 25px;
-
-}
+.footer {
+  order: 2;
+  flex: 2 1 12.5%;
+  align-self: stretch;
+  }
 
 
