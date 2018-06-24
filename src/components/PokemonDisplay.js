@@ -19,8 +19,7 @@ class PokemonDisplay extends Component {
               <li><strong>Defense:</strong> {this.props.pokemon.defense.base_stat}</li>
               <li><strong>Special-Attack:</strong> {this.props.pokemon.specialAttack.base_stat}</li>
               <li><strong>Special-Defense:</strong> {this.props.pokemon.specialDefense.base_stat}</li>
-              <li><strong>Speed:</strong> {this.props.pokemon.speed.base_stat}</li>
-              <br />
+              <li><strong>Speed:</strong> {this.props.pokemon.speed.base_stat}</li><br />
               <li><strong>Height:</strong> {!this.props.pokemon.height == '' ? this.props.pokemon.height + 'm' : ''}</li>
               <li><strong>Weight:</strong> {!this.props.pokemon.weight == '' ? this.props.pokemon.weight + 'kg' : ''}</li>
               <li><strong>Base Exp:</strong> {this.props.pokemon.baseExperience}</li>
