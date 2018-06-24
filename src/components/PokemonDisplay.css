@@ -7,6 +7,22 @@
   align-items: stretch;
   }
 
+
+  table {
+    width: 100%;
+    border-spacing: 5px;
+  }
+
+  table, th, td {
+    vertical-align: top;
+    text-align: left;
+    padding: 5px;
+  }
+
+  td {
+    font-weight: normal;
+  }
+
 .pokemon-results {
   order: 0;
   flex: 0 1 auto;
@@ -17,20 +33,30 @@
   order: 0;
   flex: 0 1 auto;
   align-self: auto;
-  list-style: none;
+
   }
+.pokemon-info-header{
+  font-size: 25px;
+  font-weight: bold;
+}
+.pokemon-party-list {
+    list-style: none;
+}
 
 .pokemon-list {
   list-style: none;
 }
 
 .pokemon-list strong {
-  font-size: 14px;
+  font-size: 18px;
+  font-weight: bold;
+}
 
+.pokemon-party-img {
+  width: 50px;
 }
 
 h3 {
   font-size: 25px;
-
 }
 

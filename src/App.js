@@ -112,10 +112,9 @@ class App extends Component {
     if (this.state.pokemonParty.length >= 6) {
       return this.setState({ alert: true });
     } else
-      console.log(`Adding Pokemon to Party: ${pokemon.name} at Party Slot: ${index + 1} (Index: ${index})`);
+      console.log(`Adding Pokemon to Party: ${pokemon.name} at Party Slot: ${+index + 1} (Index: ${index})`);
     return axios.post('/pokemon-party', pokemon, index)
       .then(response => {
-
         this.setState({
           pokemonParty: response.data,
           pokemonPartyIndex: response.data.length,
@@ -141,6 +140,19 @@ class App extends Component {
       });
   }
 
+  updatePartyWithCurrentResult = (e, index, pokemon) => {
+    e.preventDefault();
+    console.log(`Replacing Pokemon From Party at Party Slot: ${index + 1} (Index: ${index} with Pokemon from Results)`)
+    axios.put('/pokemon-party/' + index, pokemon)
+      .then(response => {
+        this.setState({
+          pokemonParty: response.data,
+          pokemonPartyIndex: response.data.length,
+          alert: false,
+        });
+      });
+  }
+
   closeAlertModal = (e) => {
     this.setState({
       alert: false,
@@ -159,13 +171,12 @@ class App extends Component {
             fetchPokemon={this.fetchPokemon} updatefromPokemonSearch={this.updatefromPokemonSearch} />
           <PokemonDisplay
             className="display"
-            addToPartyFn={this.addToParty} removeFromPartyFn={this.removeFromParty}
+            addToPartyFn={this.addToParty} removeFromPartyFn={this.removeFromParty} updatePartyFn={this.updatePartyWithCurrentResult}
             pokemon={this.state.pokemon} pokemonPartyIndex={this.state.pokmeonPartyIndex} pokemonParty={this.state.pokemonParty} loading={this.state.loading}
           />
-          <br /> {this.state.alert ? <Alert closeAlertModal={this.closeAlertModal} /> : null}
-          <br />
-          <Footer className="footer">© Brad Van Orman 2018</Footer>
         </div>
+        <br /> {this.state.alert ? <Alert closeAlertModal={this.closeAlertModal} /> : null}
+        <Footer className="footer">© Brad Van Orman 2018</Footer>
       </div >
     );
   }
